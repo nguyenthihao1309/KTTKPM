@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  postgresql:
+    image: docker-tuan05
+    container_name: docker-tuan05
+    environment:
+      POSTGRES_PASSWORD: "changeme"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "tuan04_quanlychuyenbay"
+    volumes:
+      - ~data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - tuan05
+
+  spring_boot_docker_compose:
+    image: docker-tuan05
+    container_name: docker-tuan05
+    depends_on:
+      - postgresql
+    environment:
+      DATABASE_USERNAME: "postgres"
+      DATABASE_PASSWORD: "changeme"
+      DATABASE_HOST: "postgresql"
+      DATABASE_NAME: "tuan04_quanlychuyenbay"
+      DATABASE_PORT: 5432
+    ports:
+      - 8080:8080
+    networks:
+      - tuan05
+
+networks:
+  tuan05:
+    driver: bridge
